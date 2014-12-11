@@ -88,6 +88,7 @@ class Api(
         self.scope = kwargs.get("scope", SCOPE)
         self.access_token = kwargs.get("access_token", None)
         self.refresh_token = kwargs.get("refresh_token", None)
+        self.email = kwargs.get("email", None)
 
     def oauth_authorize(self, state = None):
         url = self.auth_url + "oauth/authorize"
@@ -115,8 +116,8 @@ class Api(
         )
         self.access_token = contents["access_token"]
         self.refresh_token = contents["refresh_token"]
+        self.email = contents["info"]["email"]
         self.trigger("access_token", self.access_token)
-        self.trigger("refresh_token", self.refresh_token)
         return self.access_token
 
     def oauth_refresh(self, refresh_token):
