@@ -1,0 +1,7 @@
+*.pyc
+*.debug
+
+session.shelve*
+
+/dist
+/src/digitalocean_api.egg-info
