@@ -37,5 +37,5 @@ __license__ = "GNU General Public License (GPL), Version 3"
 from . import app
 from . import base
 
-from .app import FacebookApp
+from .app import DigitaloceanApp
 from .base import get_api
