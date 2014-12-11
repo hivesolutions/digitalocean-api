@@ -39,6 +39,7 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import appier
 
+from . import action
 from . import droplet
 
 BASE_URL = "https://api.digitalocean.com/v2/"
@@ -63,12 +64,14 @@ in case none is provided to the api (client) """
 
 SCOPE = (
     "read",
+    "write"
 )
 """ The list of permissions to be used to create the
 scope string for the oauth value """
 
 class Api(
     appier.OAuth2Api,
+    action.ActionApi,
     droplet.DropletApi
 ):
 

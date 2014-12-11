@@ -50,6 +50,14 @@ class DigitaloceanApp(appier.WebApp):
     def index(self):
         return self.droplets()
 
+    @appier.route("/actions", "GET")
+    def actions(self):
+        url = self.ensure_api()
+        if url: return self.redirect(url)
+        api = self.get_api()
+        actions = api.list_actions()
+        return actions
+
     @appier.route("/droplets", "GET")
     def droplets(self):
         url = self.ensure_api()
@@ -57,6 +65,25 @@ class DigitaloceanApp(appier.WebApp):
         api = self.get_api()
         droplets = api.list_droplets()
         return droplets
+
+    @appier.route("/create_dummy", "GET")
+    def create_dummy(self):
+        url = self.ensure_api()
+        if url: return self.redirect(url)
+        api = self.get_api()
+        dummy = dict(
+            name = self.field("name", "dummy"),
+            region = self.field("region", "ams1"),
+            size = self.field("size", "512mb"),
+            image = self.field("image", "ubuntu-14-04-x64"),
+            ssh_keys = self.field("ssh_keys", None),
+            backups = self.field("backups", False, cast = bool),
+            ipv6 = self.field("ipv6", False, cast = bool),
+            private_networking = self.field("private_networking", None),
+            user_data = self.field("user_data", None)
+        )
+        droplet = api.create_droplet(dummy)
+        return droplet
 
     @appier.route("/oauth", "GET")
     def oauth(self):
