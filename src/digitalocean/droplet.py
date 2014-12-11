@@ -43,3 +43,8 @@ class DropletApi(object):
         url = self.base_url + "droplets"
         contents = self.get(url)
         return contents
+
+    def create_droplet(self, payload):
+        url = self.base_url + "droplets"
+        contents = self.post(url, data_j = payload)
+        return contents
