@@ -4,4 +4,4 @@
 session.shelve*
 
 /dist
-/src/digitalocean_api.egg-info
+/src/digitalocean_api_python.egg-info
