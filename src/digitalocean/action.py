@@ -47,4 +47,4 @@ class ActionApi(object):
     def get_action(self, action_id):
         url = self.base_url + "actions/%d" % action_id
         contents = self.get(url)
-        return contents
+        return contents["action"]
