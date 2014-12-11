@@ -39,11 +39,91 @@ __license__ = "GNU General Public License (GPL), Version 3"
 
 import appier
 
+from . import droplet
+
 BASE_URL = "https://api.digitalocean.com/v2/"
 """ The default base url to be used when no other
 base url value is provided to the constructor """
 
-class Api(appier.OAuth2Api):
+CLIENT_ID = None
+""" The default value to be used for the client id
+in case no client id is provided to the api client """
+
+CLIENT_SECRET = None
+""" The secret value to be used for situations where
+no client secret has been provided to the client """
+
+REDIRECT_URL = "http://localhost:8080/oauth"
+""" The redirect url used as default (fallback) value
+in case none is provided to the api (client) """
+
+SCOPE = (
+    "read",
+)
+""" The list of permissions to be used to create the
+scope string for the oauth value """
+
+class Api(
+    appier.OAuth2Api,
+    droplet.DropletApi
+):
 
     def __init__(self, *args, **kwargs):
-        pass
+        appier.OAuth2Api.__init__(self, *args, **kwargs)
+        self.client_id = appier.conf("DO_ID", CLIENT_ID)
+        self.client_secret = appier.conf("DO_SECRET", CLIENT_SECRET)
+        self.redirect_url = appier.conf("DO_REDIRECT_URL", REDIRECT_URL)
+        self.base_url = kwargs.get("base_url", BASE_URL)
+        self.client_id = kwargs.get("client_id", self.client_id)
+        self.client_secret = kwargs.get("client_secret", self.client_secret)
+        self.redirect_url = kwargs.get("redirect_url", self.redirect_url)
+        self.scope = kwargs.get("scope", SCOPE)
+        self.access_token = kwargs.get("access_token", None)
+
+    def oauth_authorize(self, state = None):
+        url = self.base_url + "oauth/authorize"
+        values = dict(
+            client_id = self.client_id,
+            redirect_uri = self.redirect_url,
+            response_type = "code",
+            scope = " ".join(self.scope)
+        )
+        if state: values["state"] = state
+        data = appier.legacy.urlencode(values)
+        url = url + "?" + data
+        return url
+
+    def oauth_access(self, code, long = True):
+        url = self.base_url + "oauth/access_token"
+        contents = self.post(
+            url,
+            token = False,
+            client_id = self.client_id,
+            client_secret = self.client_secret,
+            grant_type = "authorization_code",
+            redirect_uri = self.redirect_url,
+            code = code
+        )
+        contents = contents.decode("utf-8")
+        contents = appier.legacy.parse_qs(contents)
+        self.access_token = contents["access_token"][0]
+        self.trigger("access_token", self.access_token)
+        if long: self.access_token = self.oauth_long_lived(self.access_token)
+        return self.access_token
+
+    def oauth_long_lived(self, short_token):
+        url = self.base_url + "oauth/access_token"
+        contents = self.post(
+            url,
+            token = False,
+            client_id = self.client_id,
+            client_secret = self.client_secret,
+            grant_type = "fb_exchange_token",
+            redirect_uri = self.redirect_url,
+            fb_exchange_token = short_token,
+        )
+        contents = contents.decode("utf-8")
+        contents = appier.legacy.parse_qs(contents)
+        self.access_token = contents["access_token"][0]
+        self.trigger("access_token", self.access_token)
+        return self.access_token

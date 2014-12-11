@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Hive DigitalOcean API. If not, see <http://www.gnu.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,8 +37,13 @@ __copyright__ = "Copyright (c) 2008-2014 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-from . import base
-from . import droplet
+import appier
 
-from .base import BASE_URL, Api
-from .droplet import DropletApi
+import digitalocean
+
+def get_api():
+    return digitalocean.Api(
+        client_id = appier.conf("DO_ID"),
+        client_secret = appier.conf("DO_SECRET"),
+        redirect_url = appier.conf("DO_REDIRECT_URL")
+    )

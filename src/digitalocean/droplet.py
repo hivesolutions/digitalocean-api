@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Hive DigitalOcean API. If not, see <http://www.gnu.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,8 +37,9 @@ __copyright__ = "Copyright (c) 2008-2014 Hive Solutions Lda."
 __license__ = "GNU General Public License (GPL), Version 3"
 """ The license for the module """
 
-from . import base
-from . import droplet
+class DropletApi(object):
 
-from .base import BASE_URL, Api
-from .droplet import DropletApi
+    def list_droplets(self):
+        url = self.base_url + "droplets"
+        contents = self.get(url)
+        return contents
