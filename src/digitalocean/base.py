@@ -45,6 +45,10 @@ BASE_URL = "https://api.digitalocean.com/v2/"
 """ The default base url to be used when no other
 base url value is provided to the constructor """
 
+AUTH_URL = "https://cloud.digitalocean.com/v1/"
+""" The default auth url to be used as the basis
+for the authentication part of the api """
+
 CLIENT_ID = None
 """ The default value to be used for the client id
 in case no client id is provided to the api client """
@@ -74,14 +78,16 @@ class Api(
         self.client_secret = appier.conf("DO_SECRET", CLIENT_SECRET)
         self.redirect_url = appier.conf("DO_REDIRECT_URL", REDIRECT_URL)
         self.base_url = kwargs.get("base_url", BASE_URL)
+        self.auth_url = kwargs.get("auth_url", AUTH_URL)
         self.client_id = kwargs.get("client_id", self.client_id)
         self.client_secret = kwargs.get("client_secret", self.client_secret)
         self.redirect_url = kwargs.get("redirect_url", self.redirect_url)
         self.scope = kwargs.get("scope", SCOPE)
         self.access_token = kwargs.get("access_token", None)
+        self.refresh_token = kwargs.get("refresh_token", None)
 
     def oauth_authorize(self, state = None):
-        url = self.base_url + "oauth/authorize"
+        url = self.auth_url + "oauth/authorize"
         values = dict(
             client_id = self.client_id,
             redirect_uri = self.redirect_url,
@@ -93,8 +99,8 @@ class Api(
         url = url + "?" + data
         return url
 
-    def oauth_access(self, code, long = True):
-        url = self.base_url + "oauth/access_token"
+    def oauth_access(self, code):
+        url = self.auth_url + "oauth/token"
         contents = self.post(
             url,
             token = False,
@@ -104,26 +110,25 @@ class Api(
             redirect_uri = self.redirect_url,
             code = code
         )
-        contents = contents.decode("utf-8")
-        contents = appier.legacy.parse_qs(contents)
-        self.access_token = contents["access_token"][0]
+        self.access_token = contents["access_token"]
+        self.refresh_token = contents["refresh_token"]
         self.trigger("access_token", self.access_token)
-        if long: self.access_token = self.oauth_long_lived(self.access_token)
+        self.trigger("refresh_token", self.refresh_token)
         return self.access_token
 
-    def oauth_long_lived(self, short_token):
-        url = self.base_url + "oauth/access_token"
+    def oauth_refresh(self, refresh_token):
+        url = self.auth_url + "oauth/token"
         contents = self.post(
             url,
             token = False,
             client_id = self.client_id,
             client_secret = self.client_secret,
-            grant_type = "fb_exchange_token",
+            grant_type = "refresh_token",
             redirect_uri = self.redirect_url,
-            fb_exchange_token = short_token,
+            refresh_token = refresh_token,
         )
-        contents = contents.decode("utf-8")
-        contents = appier.legacy.parse_qs(contents)
-        self.access_token = contents["access_token"][0]
+        self.access_token = contents["access_token"]
+        self.refresh_token = contents["refresh_token"]
         self.trigger("access_token", self.access_token)
+        self.trigger("refresh_token", self.refresh_token)
         return self.access_token
