@@ -45,7 +45,7 @@ setuptools.setup(
     version = "0.1.0",
     author = "Hive Solutions Lda.",
     author_email = "development@hive.pt",
-    description = "DigitalOcean API",
+    description = "DigitalOcean API Client",
     license = "GNU General Public License (GPL), Version 3",
     keywords = "digitalocean api",
     url = "http://digitalocean_api.hive.pt",
