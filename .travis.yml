@@ -1,0 +1,27 @@
+sudo: false
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "nightly"
+  - "pypy"
+  - "pypy3"
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install twine
+script: if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then coverage run --source=digitalocean setup.py test; else python setup.py test; fi
+after_success: coveralls
+deploy:
+  provider: pypi
+  user: joamag
+  password:
+    secure: doHsg5Xc5L7vRAhB9rdN4XnDATwZ3T84vJjBHZE2aA6TvM0SHJSyYqzeDWTDNc1/FZ5GADvz+VZ0kubB9cKOOaSAua0YGxer9wZ5ehkxNL9AuWZ12QjEBX1xCUup1q4nXLmWYJG/tfWhQ5G3Fdn0YyjyKZfeZbBdCYc8/MSkWEk=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    python: "2.7"
