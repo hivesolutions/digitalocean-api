@@ -4,7 +4,7 @@ Simple fast implemenation of DigitalOcean's OAuth API.
 
 ## License
 
-Digitalocean API is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
+DigitalOcean API is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
 
 ## Build Automation
 
