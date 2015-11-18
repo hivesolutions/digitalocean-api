@@ -42,11 +42,11 @@ import setuptools
 
 setuptools.setup(
     name = "digitalocean_api_python",
-    version = "0.1.1",
+    version = "0.1.2",
     author = "Hive Solutions Lda.",
     author_email = "development@hive.pt",
     description = "DigitalOcean API Client",
-    license = "Apache License, Version 2.0",
+    license = "GNU General Public License (GPL), Version 3",
     keywords = "digitalocean api",
     url = "http://digitalocean_api.hive.pt",
     zip_safe = False,
@@ -62,7 +62,7 @@ setuptools.setup(
     classifiers = [
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
-        "License :: OSI Approved :: Apache Software License",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.6",
