@@ -43,8 +43,12 @@ from . import base
 
 class DigitaloceanApp(appier.WebApp):
 
-    def __init__(self):
-        appier.WebApp.__init__(self, name = "digitalocean")
+    def __init__(self, *args, **kwargs):
+        appier.WebApp.__init__(
+            self,
+            name = "digitalocean",
+            *args, **kwargs
+        )
 
     @appier.route("/", "GET")
     def index(self):
