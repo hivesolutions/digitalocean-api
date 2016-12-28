@@ -121,3 +121,5 @@ class DigitaloceanApp(appier.WebApp):
 if __name__ == "__main__":
     app = DigitaloceanApp()
     app.serve()
+else:
+    __path__ = []
