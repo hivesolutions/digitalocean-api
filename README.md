@@ -1,6 +1,6 @@
-# [DigitalOcean API](http://digitalocean_api.hive.pt)
+# [DigitalOcean API](http://digitalocean-api.hive.pt)
 
-Simple fast implemenation of DigitalOcean's OAuth API.
+Simple fast implementation of DigitalOcean's OAuth API.
 
 ## License
 
