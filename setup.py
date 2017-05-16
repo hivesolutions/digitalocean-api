@@ -48,7 +48,7 @@ setuptools.setup(
     description = "DigitalOcean API Client",
     license = "Apache License, Version 2.0",
     keywords = "digitalocean api",
-    url = "http://digitalocean_api.hive.pt",
+    url = "http://digitalocean-api.hive.pt",
     zip_safe = False,
     packages = [
         "digitalocean"
