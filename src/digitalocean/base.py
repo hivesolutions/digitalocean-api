@@ -69,14 +69,14 @@ SCOPE = (
 """ The list of permissions to be used to create the
 scope string for the oauth value """
 
-class Api(
-    appier.OAuth2Api,
-    action.ActionApi,
-    droplet.DropletApi
+class API(
+    appier.OAuth2API,
+    action.ActionAPI,
+    droplet.DropletAPI
 ):
 
     def __init__(self, *args, **kwargs):
-        appier.OAuth2Api.__init__(self, *args, **kwargs)
+        appier.OAuth2API.__init__(self, *args, **kwargs)
         self.client_id = appier.conf("DO_ID", CLIENT_ID)
         self.client_secret = appier.conf("DO_SECRET", CLIENT_SECRET)
         self.redirect_url = appier.conf("DO_REDIRECT_URL", REDIRECT_URL)

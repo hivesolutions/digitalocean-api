@@ -38,6 +38,6 @@ from . import action
 from . import base
 from . import droplet
 
-from .action import ActionApi
-from .base import BASE_URL, Api
-from .droplet import DropletApi
+from .action import ActionAPI
+from .base import BASE_URL, API
+from .droplet import DropletAPI

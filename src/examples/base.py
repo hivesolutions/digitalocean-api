@@ -42,7 +42,7 @@ import appier
 import digitalocean
 
 def get_api():
-    return digitalocean.Api(
+    return digitalocean.API(
         client_id = appier.conf("DO_ID"),
         client_secret = appier.conf("DO_SECRET"),
         redirect_url = appier.conf("DO_REDIRECT_URL")
