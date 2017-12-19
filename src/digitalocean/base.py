@@ -43,8 +43,8 @@ from . import action
 from . import droplet
 
 BASE_URL = "https://api.digitalocean.com/v2/"
-""" The default base url to be used when no other
-base url value is provided to the constructor """
+""" The default base URL to be used when no other
+base URL value is provided to the constructor """
 
 AUTH_URL = "https://cloud.digitalocean.com/v1/"
 """ The default auth url to be used as the basis
