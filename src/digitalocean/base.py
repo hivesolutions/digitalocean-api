@@ -47,7 +47,7 @@ BASE_URL = "https://api.digitalocean.com/v2/"
 base URL value is provided to the constructor """
 
 AUTH_URL = "https://cloud.digitalocean.com/v1/"
-""" The default auth url to be used as the basis
+""" The default auth URL to be used as the basis
 for the authentication part of the api """
 
 CLIENT_ID = None
@@ -59,7 +59,7 @@ CLIENT_SECRET = None
 no client secret has been provided to the client """
 
 REDIRECT_URL = "http://localhost:8080/oauth"
-""" The redirect url used as default (fallback) value
+""" The redirect URL used as default (fallback) value
 in case none is provided to the api (client) """
 
 SCOPE = (
