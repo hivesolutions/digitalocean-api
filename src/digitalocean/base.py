@@ -42,17 +42,17 @@ import appier
 from . import action
 from . import droplet
 
-BASE_URL = "https://api.digitalocean.com/v2/"
+BASE_URL = "https://API.digitalocean.com/v2/"
 """ The default base URL to be used when no other
 base URL value is provided to the constructor """
 
 AUTH_URL = "https://cloud.digitalocean.com/v1/"
 """ The default auth URL to be used as the basis
-for the authentication part of the api """
+for the authentication part of the API """
 
 CLIENT_ID = None
 """ The default value to be used for the client id
-in case no client id is provided to the api client """
+in case no client id is provided to the API client """
 
 CLIENT_SECRET = None
 """ The secret value to be used for situations where
@@ -60,7 +60,7 @@ no client secret has been provided to the client """
 
 REDIRECT_URL = "http://localhost:8080/oauth"
 """ The redirect URL used as default (fallback) value
-in case none is provided to the api (client) """
+in case none is provided to the API (client) """
 
 SCOPE = (
     "read",
