@@ -3,6 +3,12 @@
 
 session.shelve*
 
+.DS_Store
+
+/.vscode/settings.json
+
+/.venv
+
 /dist
 /build
 /src/digitalocean_api_python.egg-info
