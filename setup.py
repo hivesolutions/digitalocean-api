@@ -32,8 +32,8 @@ import os
 import setuptools
 
 setuptools.setup(
-    name="digitalocean-api_python",
-    version="0.1.3",
+    name="digitalocean-api-python",
+    version="0.1.4",
     author="Hive Solutions Lda.",
     author_email="development@hive.pt",
     description="DigitalOcean API Client",

@@ -8,18 +8,24 @@ jobs:
     name: Build
     strategy:
       matrix:
-        python-version: [2.7]
+        python-version: [3.12]
     runs-on: ubuntu-latest
     container: python:${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v4
       - run: python --version
-      - run: pip install -r requirements.txt
+      - run: |
+          pip install -r requirements.txt
+          pip install --upgrade setuptools
       - run: |
           pip install black
           black . --check
         if: matrix.python-version == '3.12'
+      - run: |
+          pip install pytest
+          pytest
       - run: python setup.py test
+        if: ${{ !contains(fromJson('["3.9", "3.10", "3.11", "3.12", "latest"]'), matrix.python-version) }}
       - run: pip install twine wheel
       - run: python setup.py sdist bdist_wheel
       - run: python -m twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} dist/*
